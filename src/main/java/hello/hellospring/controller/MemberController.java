@@ -23,6 +23,7 @@ public class MemberController {
     @Autowired //생성자에 Autowired 가 되어있으면 생성자의 파라미터 스프링컨테이너에서 가져와 매핑해준다.
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
+        System.out.println("memberService = " + memberService.getClass() );
     }
 
     @GetMapping("/members/new")

@@ -5,10 +5,12 @@ import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 public class MemberService {
     // 서비스 클래스의 메서드는 비즈니스 의존적으로 설계
     // repository는 crud 스럽게
@@ -24,10 +26,18 @@ public class MemberService {
      * 회원가입
      */
     public Long join(Member member) {
-        // 요구사항: 동명이인 금지
-        validateDuplicateName(member); //중복 회원 거증
-        memberRepository.save(member);
-        return member.getId();
+
+//        long start = System.currentTimeMillis();
+//        try {
+            // 요구사항: 동명이인 금지
+            validateDuplicateName(member); //중복 회원 거증
+            memberRepository.save(member);
+            return member.getId();
+//        } finally {
+//            long finish = System.currentTimeMillis();
+//            long timeMs = finish - start;
+//            System.out.println("join = " + timeMs + "ms");
+//        }
     }
 
     private void validateDuplicateName(Member member) {
